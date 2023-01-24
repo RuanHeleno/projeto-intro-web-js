@@ -68,6 +68,7 @@
                 type="text"
                 placeholder="Digite o nome da turma"
                 id="buscaTurma"
+                onkeypress="checkKeyPressed(event, this)"
               />
               <button
                 id="btn"
@@ -96,7 +97,7 @@
                 <label for="turma">Turma: <span>*</span></label>
                 <input type="text" id="turma" required />
                 <label for="parcelas">Número de parcelas: <span>*</span></label>
-                <input type="number" id="parcelas" required />
+                <input type="number" id="parcelas" min="1" required />
 
                 <button id="btn" type="submit">Matricular Aluno</button>
               </form>
@@ -119,11 +120,17 @@
         </article>
 
         <article id="financeiroalunos">
-          <article id="lista_cursos">
-            <p class="close" onclick="esconderCursos()">X</p>
+          <div id="lista_cursos">
+            <p class="close">
+              <img
+                src="../assets/close-button.svg"
+                alt="Botão de fechar janela"
+                onclick="esconderCursos()"
+              />
+            </p>
             <h2 class="title">Cursos</h2>
             <div id="lista_cursos_body"></div>
-          </article>
+          </div>
 
           <div class="container">
             <div class="left">
@@ -134,7 +141,7 @@
                 Adicionar curso
               </button>
               <label for="nParcelas">Número de Parcelas</label>
-              <input type="number" id="nParcelas" />
+              <input type="number" id="nParcelas" min="1" />
               <button
                 id="btn"
                 onclick="parcelarCurso(carrinhoCursos, this.previousElementSibling.value)"
@@ -148,7 +155,7 @@
             <div class="right">
               <h2 class="title">Relatório Aluno</h2>
               <label for="buscaAluno">Nome</label>
-              <input type="text" id="buscaAluno" />
+              <input type="text" id="buscaAluno" onkeypress="checkKeyPressed(event, this)" />
               <button
                 id="btn"
                 onclick="relatorioEstudante(this.previousElementSibling.value)"

@@ -98,7 +98,7 @@ figure img {
 #cta_wpp {
     position: fixed;
     width: 3%;
-    right: 3%;
+    right: 4.5%;
     top: 70vh;
     transition: var(--transition);
 }
@@ -107,11 +107,12 @@ figure img {
     transform: scale(1.2);
 }
 
-/* HEADER */
+/* MENU */
 #header {
     position: fixed;
     background-color: white;
     width: 100vw;
+    z-index: 1;
 }
 
 #header .container {
@@ -170,7 +171,7 @@ figure img {
 
 .gallery .card:hover {
     border-color: black;
-    background-color: #f5f5f5 !important;
+    background-color: #f8efe0 !important;
 }
 
 /* FOOTER */
@@ -357,6 +358,7 @@ figure img {
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    box-shadow: 0 0 5px black;
 }
 
 #cursos .top .container .gallery .card .title {
@@ -445,6 +447,10 @@ figure img {
     font-weight: 700;
 }
 
+#contato .container form label span { 
+    color: red;
+}
+
 #contato .container form input,
 #contato .container form textarea {
     border: 1px solid black;
@@ -500,15 +506,15 @@ figure img {
 }
 
 #adm nav .container {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
+    padding: 4rem 2rem;
+    width: 100%;
 }
 
 #adm nav .container li {
-    display: flex;
-    justify-content: center;
+    text-align: left;
 }
 
 #adm nav .container li button {
@@ -516,9 +522,6 @@ figure img {
     background-color: transparent;
     font-size: 1.4rem;
     cursor: pointer;
-    margin: 0 auto;
-    text-align: left;
-    width: fit-content;
 }
 
 #adm section {
@@ -685,36 +688,50 @@ figure img {
 #adm section #financeiroalunos #lista_cursos {
     position: absolute;
     width: 40vw;
-    background-color: #dea31a;
+    background-color: #0E0E0E;
     border-radius: 10px;
-    left: 52%;
+    left: 43%;
     top: 15%;
     transition: var(--transition);
     display: none;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 4rem;
+    gap: 1rem;
 }
 
 #adm section #financeiroalunos #lista_cursos .close {
-    align-self: flex-end;
-    cursor: pointer;
     font-size: 1.5rem;
     padding-right: .5rem;
+    padding-top: .5rem;
+    text-align: right;
 }
+
+#adm section #financeiroalunos #lista_cursos .close img {
+    cursor: pointer;
+    width: 6%;
+    filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(136deg) brightness(103%) contrast(103%);
+}
+
 
 #adm section #financeiroalunos #lista_cursos .title {
     margin-bottom: 1rem;
+    color: #F6C34A;
 }
 
 #adm section #financeiroalunos #lista_cursos #lista_cursos_body {
     padding: 0 1rem;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
 }
 
 #adm section #financeiroalunos #lista_cursos #lista_cursos_body .top {
     display: flex;
     justify-content: space-between;
     font-weight: bold;
+    color: #F6C34A;
 }
 
 #adm section #financeiroalunos #lista_cursos #lista_cursos_body .top p {
@@ -736,7 +753,7 @@ figure img {
 }
 
 #adm section #financeiroalunos #lista_cursos #lista_cursos_body .body button {
-    background-color: lightgreen;
+    background-color: green;
     cursor: pointer;
     border: 1px solid transparent;
     padding: .2rem 1rem;

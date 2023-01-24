@@ -127,131 +127,55 @@ const estudantes = [
 
 const carrinhoCursos = [];
 
-const parcelarCurso = (arr, nParcelas) => {
-  let descontoCursos = 0;
-  const descontoAVista = 0.2;
-
-  let total = 0;
-  for (let item of arr) {
-    total += item.valor;
-  }
-
-  switch (arr.length) {
-    case 3:
-      descontoCursos = 0.15;
-      break;
-    case 2:
-      descontoCursos = 0.1;
-      break;
-    default:
-      descontoCursos = 0;
-  }
-
-  total -= total * descontoCursos;
-
-  if (nParcelas <= 2) {
-    total -= total * descontoAVista;
-
-    document.getElementById("curso_valor").innerHTML = `
-      <p><b>Valor</b></p>
-      <p class="text">O valor do pagamento é de <b>R$ ${total.toFixed(
-        2
-      )}</b> com 20% desconto, parcelado em ${nParcelas}x de <b>R$ ${(
-      total / nParcelas
-    ).toFixed(2)}</b></p>
-      `;
-  } else {
-    document.getElementById("curso_valor").innerHTML = `
-    <p><b>Valor</b></p>
-    <p class="text">O valor do pagamento é de <b>R$ ${total.toFixed(
-      2
-    )}</b>, parcelado em ${nParcelas}x de <b>R$ ${(total / nParcelas).toFixed(
-      2
-    )}</b></p>`;
-  }
-};
-
+//Constantes dos elementos HTML
+const btns = document.getElementsByClassName("btn");
+const buscaTurma = document.getElementById("buscaTurma");
+const card = document.getElementById("cards");
 const buscaCurso = document.getElementById("buscaCurso");
+const cursoValor = document.getElementById("curso_valor");
+const listaCurso = document.getElementById("lista_cursos");
+const listaCursoBody = document.getElementById("lista_cursos_body");
+const matriculaMsg = document.getElementById("matricula-msg");
+const matriculaMsgText = document.getElementById("matricula-msg-text");
+const form = document.getElementById("form");
+const buscaAluno = document.getElementById("buscaAluno");
+const relatorioMsg = document.getElementById("relatorio-msg");
 
-const addCarrinhoCurso = (curso) => {
-  const cursoBuscado = buscarCurso(curso);
-
-  if (cursoBuscado === undefined) {
-    sweetAlert("Curso não encontrado!", "error");
-    return;
-  }
-
-  for (let item of carrinhoCursos) {
-    if (item.curso === curso) {
-      sweetAlert("Curso já adicionado!", "warning");
-      return;
-    }
-  }
-
-  carrinhoCursos.push(cursoBuscado);
-
-  buscaCurso.innerHTML += `
-    <span class="show_curso">
-      <p>${curso === "HTML e CSS" ? "HTML" : curso}</p>
-      <img src="../assets/cancel.png" alt="Cancel" onclick="removeCarrinhoCurso(this.parentElement, this.previousElementSibling.innerHTML)">
-    </span>
-  `;
-
-  buscaCurso.style.borderColor = "black";
+//Concentra todos os sweet Alert da página
+const sweetAlert = (msg, icon) => {
+  swal({
+    title: msg,
+    icon: icon,
+  });
 };
 
-const removeCarrinhoCurso = (element, curso) => {
-  if (curso === "HTML") curso = "HTML e CSS";
-  const cursoBuscado = buscarCurso(curso);
-
-  carrinhoCursos.pop(cursoBuscado);
-  element.remove();
-
-  if (carrinhoCursos.length === 0) {
-    buscaCurso.style.borderColor = "transparent";
+//Checa a tecla pressionada para realizar a busca através do Enter do teclado
+const checkKeyPressed = (event, element) => {
+  if (event.key === "Enter") {
+    if (element === buscaTurma) gridCards(element.value);
+    else if (element === buscaAluno) relatorioEstudante(element.value);
   }
 };
 
-const mostrarCursos = () => {
-  document.getElementById("lista_cursos").style.display = "flex";
-  document.getElementById("lista_cursos_body").innerHTML = "";
+//Menu ativo Area ADM
+for (let i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function () {
+    const current = document.getElementsByClassName("active");
 
-  for (let value of cursos) {
-    document.getElementById("lista_cursos_body").innerHTML += `
-      <div class="top">
-        <p>Curso</p>
-        <p>Duração</p>
-        <p>Valor</p>
-        <p>Opção</p>
-      </div>
-      <div class="body">
-        <p>${value.curso}</p>
-        <p>${value.duracao} </p>
-        <p>R$ ${value.valor}</p>
-        <p><button onclick="addCarrinhoCurso('${value.curso}')">Adicionar</button></p>
-      </div>
-    `;
-  }
-};
+    document.getElementById(
+      current[0].innerHTML.toLowerCase().replace(" ", "")
+    ).style.display = "none";
+    current[0].className = current[0].className.replace(" active", "");
 
-const esconderCursos = () => {
-  document.getElementById("lista_cursos").style.display = "none";
-};
+    this.className += " active";
+    document.getElementById(
+      this.innerHTML.toLowerCase().replace(" ", "")
+    ).style.display = "block";
+  });
+}
 
-const buscarCurso = (nome) => {
-  return cursos.find((e) => e.curso.toLowerCase() === nome.toLowerCase());
-};
 
-const buscarEstudante = (nome) => {
-  const query = estudantes.filter(
-    (e) => e.estudante.toLowerCase() === nome.toLowerCase()
-  );
-
-  if (query.length > 0) {
-    return query;
-  }
-};
-
+//Busca a turma pelo nome completo ou parte do nome
 const buscarTurma = (nome) => {
   if (nome.length === 0) {
     return turmas;
@@ -261,85 +185,29 @@ const buscarTurma = (nome) => {
     e.turma.toLowerCase().includes(nome.toLowerCase())
   );
 
-  if (query.length > 0) {
-    return query;
-  }
+  if (query.length > 0) return query;
 };
 
-const matricular = (nome, curso, turma, nParcelas) => {
-  const cursoBuscado = buscarCurso(curso);
-  const turmaBuscada = buscarTurma(turma);
-  document.getElementById("matricula-msg").style.visibility = "hidden";
-
-  if (cursoBuscado === undefined) {
-    sweetAlert("Curso não encontrado!", "error");
-    return;
-  }
-
-  if (turmaBuscada === undefined) {
-    sweetAlert("Turma não encontrada!", "error");
-    return;
-  }
-
-  document.getElementById("matricula-msg").style.visibility = "visible";
-  const valorCurso = cursoBuscado.valor;
-  let valorTotal = 0;
-
-  nParcelas > 0 && nParcelas <= 2
-    ? (valorTotal = valorCurso - valorCurso * 0.2)
-    : (valorTotal = valorCurso);
-
-  const novoAluno = {
-    estudante: nome,
-    turma: turma,
-    curso: curso,
-    valor: valorCurso,
-    nParcelas: nParcelas,
-    desconto: nParcelas <= 2 ? true : false,
-    parcelas: valorTotal / nParcelas,
-  };
-
-  estudantes.push(novoAluno);
-
-  document.getElementById("matricula-msg-text").innerHTML = `
-    <p><span>Nome:</span> ${nome}</p>
-    <p><span>Curso:</span> ${curso}</p>
-    <p><span>Turma:</span> ${turma}</p>
-`;
-
-  document.getElementById("form").reset();
+//Busca o curso pelo nome exato (sem diferença de maiúsculo para minúsculo)
+const buscarCurso = (nome) => {
+  return cursos.find((e) => e.curso.toLowerCase() === nome.toLowerCase());
 };
 
-const reloatorioMsg = document.getElementById("relatorio-msg");
+//Busca o aluno pelo nome exato (sem diferença de maiúsculo para minúsculo)
+const buscarEstudante = (nome) => {
+  const query = estudantes.filter(
+    (e) => e.estudante.toLowerCase() === nome.toLowerCase()
+  );
 
-const relatorioEstudante = (nome) => {
-  const estudanteBuscado = buscarEstudante(nome);
-  document.getElementById("buscaAluno").value = "";
-
-  if (estudanteBuscado === undefined) {
-    reloatorioMsg.innerHTML = "";
-    sweetAlert("Aluno não encontrado!", "error");
-    return;
-  }
-
-  for (let value of estudanteBuscado) {
-    reloatorioMsg.innerHTML = `
-      <p><span>Aluno:</span> ${value.estudante} </p>
-      <p><span>Turma:</span> ${value.turma} </p>
-      <p><span>Curso:</span> ${value.curso} </p>
-      <p><span>Valor Total:</span> R$ ${value.valor} </p>
-      <p><span>Valor Parcela:</span> R$ ${value.parcelas} </p>
-      <p><span>N° Parcelas:</span> ${value.nParcelas} </p>
-    `;
-  }
+  if (query.length > 0) return query;
 };
 
+//Mostra o(s) resultado(s) da busca pela Turma. Caso o usuário busca "em branco" irá resetar a lista para o estado inicial
 let htmlCode = ``;
-const card = document.getElementById("cards");
 
 const gridCards = (nome) => {
   const turmaBuscada = buscarTurma(nome);
-  document.getElementById("buscaTurma").value = "";
+  buscaTurma.value = "";
 
   if (turmaBuscada === undefined) {
     sweetAlert("Turma não encontrada!", "error");
@@ -367,6 +235,7 @@ const gridCards = (nome) => {
   card.innerHTML = htmlCode;
 };
 
+//Coloca os cards da Área ADM - Tela de Turmas na página
 for (let value of turmas) {
   card.innerHTML += `
   <div class="card">
@@ -383,28 +252,182 @@ for (let value of turmas) {
 `;
 }
 
-const sweetAlert = (msg, icon) => {
-  swal({
-    title: msg,
-    icon: icon,
-  });
+//Realiza a matricula do aluno checando se o curso e a turma escolhidos existem e mostra a mensagem de Aluno Matriculado, em caso de sucesso
+const matricular = (nome, curso, turma, nParcelas) => {
+  const cursoBuscado = buscarCurso(curso);
+  const turmaBuscada = buscarTurma(turma);
+  matriculaMsg.style.visibility = "hidden";
+
+  if (cursoBuscado === undefined) {
+    sweetAlert("Curso não encontrado!", "error");
+    return;
+  }
+
+  if (turmaBuscada === undefined) {
+    sweetAlert("Turma não encontrada!", "error");
+    return;
+  }
+
+  matriculaMsg.style.visibility = "visible";
+  const valorCurso = cursoBuscado.valor;
+  let valorTotal = 0;
+
+  nParcelas > 0 && nParcelas <= 2
+    ? (valorTotal = valorCurso - valorCurso * 0.2)
+    : (valorTotal = valorCurso);
+
+  const novoAluno = {
+    estudante: nome,
+    turma: turma,
+    curso: curso,
+    valor: valorCurso,
+    nParcelas: nParcelas,
+    desconto: nParcelas <= 2 ? true : false,
+    parcelas: valorTotal / nParcelas,
+  };
+
+  estudantes.push(novoAluno);
+
+  matriculaMsgText.innerHTML = `
+    <p><span>Nome:</span> ${nome}</p>
+    <p><span>Curso:</span> ${curso}</p>
+    <p><span>Turma:</span> ${turma}</p>
+`;
+
+  form.reset();
 };
 
-//Menu ativo Area ADM
-const btns = document.getElementsByClassName("btn");
+//Mostra a lista dos cursos disponíveis
+const mostrarCursos = () => {
+  listaCurso.style.display = "flex";
+  listaCursoBody.innerHTML = "";
 
-for (let i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function () {
-    const current = document.getElementsByClassName("active");
+  for (let value of cursos) {
+    listaCursoBody.innerHTML += `
+      <div class="top">
+        <p>Curso</p>
+        <p>Duração</p>
+        <p>Valor</p>
+        <p>Opção</p>
+      </div>
+      <div class="body">
+        <p>${value.curso}</p>
+        <p>${value.duracao} </p>
+        <p>R$ ${value.valor}</p>
+        <p><button onclick="addCarrinhoCurso('${value.curso}')">Adicionar</button></p>
+      </div>
+    `;
+  }
+};
 
-    document.getElementById(
-      current[0].innerHTML.toLowerCase().replace(" ", "")
-    ).style.display = "none";
-    current[0].className = current[0].className.replace(" active", "");
+//Esconde a tela do Curso
+const esconderCursos = () => {
+  listaCurso.style.display = "none";
+};
 
-    this.className += " active";
-    document.getElementById(
-      this.innerHTML.toLowerCase().replace(" ", "")
-    ).style.display = "block";
-  });
-}
+//Adiciona o curso escolhido no carrinho de compras e mostra para o usuário no campo especificado(Curso)
+const addCarrinhoCurso = (curso) => {
+  const cursoBuscado = buscarCurso(curso);
+
+  if (cursoBuscado === undefined) {
+    sweetAlert("Curso não encontrado!", "error");
+    return;
+  }
+
+  for (let item of carrinhoCursos) {
+    if (item.curso === curso) {
+      sweetAlert("Curso já adicionado!", "warning");
+      return;
+    }
+  }
+
+  carrinhoCursos.push(cursoBuscado);
+
+  buscaCurso.innerHTML += `
+    <span class="show_curso">
+      <p>${curso === "HTML e CSS" ? "HTML" : curso}</p>
+      <img src="../assets/cancel.png" alt="Cancel" onclick="removeCarrinhoCurso(this.parentElement, this.previousElementSibling.innerHTML)">
+    </span>
+  `;
+
+  buscaCurso.style.borderColor = "black";
+};
+
+//Remove o curso do carrinho e da página
+const removeCarrinhoCurso = (element, curso) => {
+  if (curso === "HTML") curso = "HTML e CSS";
+  const cursoBuscado = buscarCurso(curso);
+
+  carrinhoCursos.pop(cursoBuscado);
+  element.remove();
+
+  if (carrinhoCursos.length === 0) {
+    buscaCurso.style.borderColor = "transparent";
+  }
+};
+
+//Parcela o valor total checando o(s) curso(s) escolhido(s) e o número de parcela(s) para aplicar ou não um desconto
+const parcelarCurso = (arr, nParcelas) => {
+  let descontoCursos = 0;
+  const descontoAVista = 0.2;
+
+  let total = 0;
+  for (let item of arr) total += item.valor;
+
+  switch (arr.length) {
+    case 3:
+      descontoCursos = 0.15;
+      break;
+    case 2:
+      descontoCursos = 0.1;
+      break;
+    default:
+      descontoCursos = 0;
+  }
+
+  total -= total * descontoCursos;
+
+  if (nParcelas <= 2) {
+    total -= total * descontoAVista;
+
+    cursoValor.innerHTML = `
+      <p><b>Valor</b></p>
+      <p class="text">O valor do pagamento é de <b>R$ ${total.toFixed(
+        2
+      )}</b> com 20% desconto, parcelado em ${nParcelas}x de <b>R$ ${(
+      total / nParcelas
+    ).toFixed(2)}</b></p>
+      `;
+  } else {
+    cursoValor.innerHTML = `
+    <p><b>Valor</b></p>
+    <p class="text">O valor do pagamento é de <b>R$ ${total.toFixed(
+      2
+    )}</b>, parcelado em ${nParcelas}x de <b>R$ ${(total / nParcelas).toFixed(
+      2
+    )}</b></p>`;
+  }
+};
+
+//Mostra o relatorio do estudante buscando pelo nome certo do Aluno
+const relatorioEstudante = (nome) => {
+  const estudanteBuscado = buscarEstudante(nome);
+  buscaAluno.value = "";
+
+  if (estudanteBuscado === undefined) {
+    relatorioMsg.innerHTML = "";
+    sweetAlert("Aluno não encontrado!", "error");
+    return;
+  }
+
+  for (let value of estudanteBuscado) {
+    relatorioMsg.innerHTML = `
+      <p><span>Aluno:</span> ${value.estudante} </p>
+      <p><span>Turma:</span> ${value.turma} </p>
+      <p><span>Curso:</span> ${value.curso} </p>
+      <p><span>Valor Total:</span> R$ ${value.valor} </p>
+      <p><span>Valor Parcela:</span> R$ ${value.parcelas} </p>
+      <p><span>N° Parcelas:</span> ${value.nParcelas} </p>
+    `;
+  }
+};

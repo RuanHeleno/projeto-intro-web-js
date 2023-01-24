@@ -37,14 +37,16 @@
 
     <section id="contato">
       <div class="container">
-        <form action="">
+        <form action="https://formsubmit.co/ruanheleno.dev@gmail.com" method="post" >
           <h4 class="title">Fale Conosco</h4>
-          <label for="nome">Nome</label> <br>
-          <input type="text" name="nome" id="nome">
-          <label for="email">Email</label> <br>
-          <input type="email" name="email" id="email">
-          <label for="msg">Mensagem</label> <br>
-          <textarea name="msg" id="msg" cols="30" rows="10"></textarea>
+          <label for="nome">Nome: <span>*</span></label> <br>
+          <input type="text" name="nome" id="nome" required>
+          <label for="email">Email: <span>*</span></label> <br>
+          <input type="email" name="email" id="email" required>
+          <label for="msg">Mensagem: <span>*</span></label> <br>
+          <textarea name="msg" id="msg" cols="30" rows="8"></textarea required>
+          <input type="hidden" name="_subject" value="Contato Intro Web">
+          <input type="hidden" name="_template" value="table">
           <button type="submit">Enviar</button>
         </form>
 
