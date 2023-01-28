@@ -95,7 +95,7 @@ const turmas = [
   },
 ];
 
-const estudantes = [
+let estudantes = [
   {
     estudante: "Chris Evans",
     turma: "Hipátia",
@@ -126,11 +126,23 @@ const estudantes = [
 ];
 
 const carrinhoCursos = [];
+let htmlCode = ``;
+
+//Verifica se já está salvo no localStora, caso não esteja, salva
+if(localStorage.getItem('cursos') === null) localStorage.setItem('cursos', JSON.stringify(cursos));
+if(localStorage.getItem('turmas') === null) localStorage.setItem('turmas', JSON.stringify(turmas));
+
+//Caso já tenha salvo, joga o valor salvo no array de Estudantes
+if(localStorage.getItem('estudantes') === null) { 
+  localStorage.setItem('estudantes', JSON.stringify(estudantes));
+} else { 
+  estudantes = JSON.parse(localStorage.getItem('estudantes'));
+}
 
 //Constantes dos elementos HTML
 const btns = document.getElementsByClassName("btn");
 const buscaTurma = document.getElementById("buscaTurma");
-const card = document.getElementById("cards");
+const gallery = document.getElementById("gallery");
 const buscaCurso = document.getElementById("buscaCurso");
 const cursoValor = document.getElementById("curso_valor");
 const listaCurso = document.getElementById("lista_cursos");
@@ -140,40 +152,6 @@ const matriculaMsgText = document.getElementById("matricula-msg-text");
 const form = document.getElementById("form");
 const buscaAluno = document.getElementById("buscaAluno");
 const relatorioMsg = document.getElementById("relatorio-msg");
-
-//Concentra todos os sweet Alert da página
-const sweetAlert = (msg, icon) => {
-  swal({
-    title: msg,
-    icon: icon,
-  });
-};
-
-//Checa a tecla pressionada para realizar a busca através do Enter do teclado
-const checkKeyPressed = (event, element) => {
-  if (event.key === "Enter") {
-    if (element === buscaTurma) gridCards(element.value);
-    else if (element === buscaAluno) relatorioEstudante(element.value);
-  }
-};
-
-//Menu ativo Area ADM
-for (let i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function () {
-    const current = document.getElementsByClassName("active");
-
-    document.getElementById(
-      current[0].innerHTML.toLowerCase().replace(" ", "")
-    ).style.display = "none";
-    current[0].className = current[0].className.replace(" active", "");
-
-    this.className += " active";
-    document.getElementById(
-      this.innerHTML.toLowerCase().replace(" ", "")
-    ).style.display = "block";
-  });
-}
-
 
 //Busca a turma pelo nome completo ou parte do nome
 const buscarTurma = (nome) => {
@@ -195,16 +173,12 @@ const buscarCurso = (nome) => {
 
 //Busca o aluno pelo nome exato (sem diferença de maiúsculo para minúsculo)
 const buscarEstudante = (nome) => {
-  const query = estudantes.filter(
+  return estudantes.filter(
     (e) => e.estudante.toLowerCase() === nome.toLowerCase()
   );
-
-  if (query.length > 0) return query;
 };
 
 //Mostra o(s) resultado(s) da busca pela Turma. Caso o usuário busca "em branco" irá resetar a lista para o estado inicial
-let htmlCode = ``;
-
 const gridCards = (nome) => {
   const turmaBuscada = buscarTurma(nome);
   buscaTurma.value = "";
@@ -232,12 +206,12 @@ const gridCards = (nome) => {
   `;
   }
 
-  card.innerHTML = htmlCode;
+  gallery.innerHTML = htmlCode;
 };
 
 //Coloca os cards da Área ADM - Tela de Turmas na página
 for (let value of turmas) {
-  card.innerHTML += `
+  gallery.innerHTML += `
   <div class="card">
     <h4 class="title">${value.turma}</h4>
     <div class="body">
@@ -254,6 +228,7 @@ for (let value of turmas) {
 
 //Realiza a matricula do aluno checando se o curso e a turma escolhidos existem e mostra a mensagem de Aluno Matriculado, em caso de sucesso
 const matricular = (nome, curso, turma, nParcelas) => {
+  const estudanteBuscado = buscarEstudante(nome);
   const cursoBuscado = buscarCurso(curso);
   const turmaBuscada = buscarTurma(turma);
   matriculaMsg.style.visibility = "hidden";
@@ -265,6 +240,11 @@ const matricular = (nome, curso, turma, nParcelas) => {
 
   if (turmaBuscada === undefined) {
     sweetAlert("Turma não encontrada!", "error");
+    return;
+  }
+
+  if(estudanteBuscado.length > 0) {
+    sweetAlert("Aluno já cadastrado!", "warning");
     return;
   }
 
@@ -287,6 +267,7 @@ const matricular = (nome, curso, turma, nParcelas) => {
   };
 
   estudantes.push(novoAluno);
+  localStorage.setItem('estudantes', JSON.stringify(estudantes));
 
   matriculaMsgText.innerHTML = `
     <p><span>Nome:</span> ${nome}</p>
@@ -414,7 +395,7 @@ const relatorioEstudante = (nome) => {
   const estudanteBuscado = buscarEstudante(nome);
   buscaAluno.value = "";
 
-  if (estudanteBuscado === undefined) {
+  if (estudanteBuscado.length === 0) {
     relatorioMsg.innerHTML = "";
     sweetAlert("Aluno não encontrado!", "error");
     return;
@@ -431,3 +412,36 @@ const relatorioEstudante = (nome) => {
     `;
   }
 };
+
+//Concentra todos os sweet Alert da página
+const sweetAlert = (msg, icon) => {
+  swal({
+    title: msg,
+    icon: icon,
+  });
+};
+
+//Checa a tecla pressionada para realizar a busca através do Enter do teclado
+const checkKeyPressed = (event, element) => {
+  if (event.key === "Enter") {
+    if (element === buscaTurma) gridCards(element.value);
+    else if (element === buscaAluno) relatorioEstudante(element.value);
+  }
+};
+
+//Menu ativo Area ADM
+for (let i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function () {
+    const current = document.getElementsByClassName("active");
+
+    document.getElementById(
+      current[0].innerHTML.toLowerCase().replace(" ", "")
+    ).style.display = "none";
+    current[0].className = current[0].className.replace(" active", "");
+
+    this.className += " active";
+    document.getElementById(
+      this.innerHTML.toLowerCase().replace(" ", "")
+    ).style.display = "block";
+  });
+}

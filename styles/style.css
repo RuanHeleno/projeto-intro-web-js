@@ -7,7 +7,7 @@
     --transition: all 400ms ease-in-out;
 
     --container-width-lg: 90vw;
-    --container-width-md: 85vw;
+    --container-width-md: 95vw;
     --container-width-sm: 90vw;
 }
 
@@ -447,7 +447,7 @@ figure img {
     font-weight: 700;
 }
 
-#contato .container form label span { 
+#contato .container form label span {
     color: red;
 }
 
@@ -499,7 +499,6 @@ figure img {
 
 #adm nav {
     background-color: #0E0E0E;
-    color: white;
     font-weight: 700;
     font-size: 20px;
     width: 20vw;
@@ -901,4 +900,88 @@ figure img {
 
 #adm section #financeiroalunos .container .right #relatorio-msg p span {
     font-weight: bold;
+}
+
+/* ==================== MEDIA QUERIES (MD) ==================== */
+@media screen and (max-width: 1024px) {
+    /* General Styles */
+    .container {
+        width: var(--container-width-md);
+        padding: 2rem 0;
+    }
+
+    .container .title {
+        font-size: 1.7rem;
+    }
+
+    #cta_wpp {
+        width: 8%;
+    }
+
+    /* HEADER */
+    #header .container {
+        height: 6vh;
+    }
+
+    #header .container figure {
+        width: 25%;
+    }
+
+    #header .container ul {
+        height: 6.1vh;
+        font-size: 1.2rem;
+    }
+
+    /* FOOTER */
+    #footer .container figure {
+        width: 100%;
+        text-align: center;
+    }
+
+    #footer .container figure img { 
+        width: 30%;
+    }
+
+    #footer .container .menu {
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: space-between;
+    }
+
+    #footer .container .menu h3 { 
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    #footer .container .menu .endereco,
+    #footer .container .menu .links,
+    #footer .container .menu .redes-sociais,
+    #footer .container .menu .area-restrita {
+        width: 45%;
+        text-align: center;
+    }
+
+    #footer .container .menu .redes-sociais div {
+        gap: .5rem;
+    }
+
+    #footer .container .menu .redes-sociais div figure {
+        width: 10%;
+    }
+
+    #footer .container .menu .redes-sociais div figure a img {
+        width: 100%;
+    }
+}
+
+/* ==================== MEDIA QUERIES (SM) ==================== */
+@media screen and (max-width: 768px) {
+    .container {
+        width: var(--container-width-sm);
+        padding: 1rem 0;
+    }
+
+    .container .title {
+        font-size: 1.4rem;
+    }
 }

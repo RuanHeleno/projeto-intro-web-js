@@ -78,32 +78,32 @@
               </button>
             </div>
 
-            <div class="gallery" id="cards"></div>
+            <div class="gallery" id="gallery"></div>
           </div>
         </article>
 
         <article id="matricula">
           <div class="container">
-            <article class="left">
+            <div class="left">
               <h2 class="title">Matrículas</h2>
               <form
                 onsubmit="event.preventDefault(); matricular(nome.value, curso.value, turma.value, parcelas.value);"
                 id="form"
               >
                 <label for="nome">Nome: <span>*</span></label>
-                <input type="text" id="nome" required />
+                <input type="text" id="nome" value="Ruan" required />
                 <label for="curso">Curso: <span>*</span></label>
-                <input type="text" id="curso" required />
+                <input type="text" id="curso" value="Javascript" required />
                 <label for="turma">Turma: <span>*</span></label>
-                <input type="text" id="turma" required />
+                <input type="text" id="turma" value="Hipátia" required />
                 <label for="parcelas">Número de parcelas: <span>*</span></label>
-                <input type="number" id="parcelas" min="1" required />
+                <input type="number" id="parcelas" value="3" min="1" required />
 
                 <button id="btn" type="submit">Matricular Aluno</button>
               </form>
-            </article>
+            </div>
 
-            <article class="right" id="matricula-msg">
+            <div class="right" id="matricula-msg">
               <div class="top">
                 <h4>Aluno matriculado</h4>
                 <figure>
@@ -115,7 +115,7 @@
               </div>
 
               <div class="bottom" id="matricula-msg-text"></div>
-            </article>
+            </div>
           </div>
         </article>
 
