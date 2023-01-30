@@ -815,7 +815,7 @@ figure img {
 #adm section #financeiroalunos .container .left #buscaCurso {
     width: 50%;
     background-color: white;
-    height: 3.5vh;
+    height: 4vh;
     margin-top: -.8rem;
     border-radius: 3px;
     padding: 0 .3rem;
@@ -904,6 +904,7 @@ figure img {
 
 /* ==================== MEDIA QUERIES (MD) ==================== */
 @media screen and (max-width: 1024px) {
+
     /* General Styles */
     .container {
         width: var(--container-width-md);
@@ -916,6 +917,11 @@ figure img {
 
     #cta_wpp {
         width: 8%;
+    }
+
+    /* Botões pretos */
+    .cta_btn {
+        font-size: 1.6rem;
     }
 
     /* HEADER */
@@ -938,7 +944,7 @@ figure img {
         text-align: center;
     }
 
-    #footer .container figure img { 
+    #footer .container figure img {
         width: 30%;
     }
 
@@ -948,7 +954,7 @@ figure img {
         justify-content: space-between;
     }
 
-    #footer .container .menu h3 { 
+    #footer .container .menu h3 {
         font-size: 1.5rem;
         text-align: center;
     }
@@ -972,6 +978,178 @@ figure img {
     #footer .container .menu .redes-sociais div figure a img {
         width: 100%;
     }
+
+    /*======================================HOME==============================================*/
+    #home .top .container div .title {
+        font-size: 3rem;
+    }
+
+    #home .container div .subtitle {
+        font-size: 1.4rem;
+    }
+
+    #home .top #cta_wpp {
+        top: 80vh;
+    }
+
+    #home .middle .container p {
+        font-size: 1rem;
+        width: 80%;
+    }
+
+    #home .bottom .container .gallery {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #home .bottom .container .gallery .card {
+        width: 45%;
+    }
+
+    #home .bottom .container .gallery .card figure img {
+        width: 50%;
+    }
+
+    /*======================================CURSOS============================================== */
+    #cursos .top .container .gallery {
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    #cursos .top .container .gallery .card {
+        gap: 2rem;
+    }
+
+    #cursos .top .container .gallery .card .title {
+        font-weight: 700;
+    }
+
+    #cursos .top .container .gallery .card p {
+        font-weight: 400;
+    }
+
+    #cursos .top .container figure {
+        width: 9%;
+    }
+
+    #cursos .bottom .container {
+        padding: 5rem 0;
+    }
+
+    #cursos .bottom .container .gallery .card {
+        width: 100%;
+    }
+
+    /*======================================CONTATO============================================== */
+    #contato .container {
+        padding-top: 7rem;
+    }
+
+    #contato .container form {
+        width: 50%;
+    }
+
+    #contato #cta_wpp {
+        top: 45vh;
+    }
+
+    /*======================================ADM============================================== */
+    #adm nav {
+        width: 30vw;
+    }
+
+    #adm nav .container {
+        width: 70vw;
+    }
+
+    /* TURMAS */
+    #adm section #turmas .container .top input {
+        width: 25%;
+    }
+
+    #adm section #turmas .container .top input:focus {
+        width: 40%;
+    }
+
+    #adm section #turmas .container .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+    }
+
+    #adm section #turmas .container .gallery .card {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        background-color: white;
+        padding: 1rem 3rem;
+        border-radius: 10px;
+    }
+
+    #adm section #turmas .container .gallery .card .body {
+        font-family: 'Open Sans';
+    }
+
+    #adm section #turmas .container .gallery .card .body p {
+        text-align: left;
+
+    }
+
+    #adm section #turmas .container .gallery .card .body p span {
+        font-weight: bold;
+    }
+
+    /* MATRICULA */
+    #adm section #matricula .container {
+        width: 90%;
+        margin-top: 2rem;
+    }
+
+    #adm section #matricula .container .left {
+        width: 60%;
+    }
+
+    #adm section #matricula .container .left form input {
+        width: 70%;
+    }
+
+    #adm section #matricula .container .left form #btn {
+        width: 70%;
+    }
+
+    #adm section #matricula .container .right .top figure {
+        width: 15%;
+    }
+
+    /* FINANCEIRO ALUNO */
+    #adm section #financeiroalunos .container {
+        margin-top: 2rem;
+    }
+
+    #adm section #financeiroalunos #lista_cursos {
+        width: 60vw;
+        left: 35%;
+        top: 10%;
+    }
+
+    #adm section #financeiroalunos .container .left input,
+    #adm section #financeiroalunos .container .right input {
+        width: 60%;
+    }
+
+    #adm section #financeiroalunos .container .left #btn,
+    #adm section #financeiroalunos .container .right #btn {
+        width: 60%;
+    }
+
+
+    #adm section #financeiroalunos .container .left #buscaCurso {
+        width: 60%;
+        height: 2.5vh;
+    }
+
+    #adm section #financeiroalunos .container .left #curso_valor {
+        width: 75%;
+    }
 }
 
 /* ==================== MEDIA QUERIES (SM) ==================== */
@@ -983,5 +1161,172 @@ figure img {
 
     .container .title {
         font-size: 1.4rem;
+    }
+
+    #cta_wpp {
+        width: 11%;
+        z-index: 1;
+    }
+    
+    /* HEADER */
+    #header .container figure {
+        display: none;
+    }
+
+    #header .container nav {
+        width: 100%;
+    }
+
+    /* FOOTER */
+    #footer .container figure img {
+        width: 60%;
+    }
+
+    #footer .container .menu .endereco,
+    #footer .container .menu .links,
+    #footer .container .menu .redes-sociais,
+    #footer .container .menu .area-restrita {
+        width: 100%;
+    }
+
+    /*======================================HOME==============================================*/
+    #home .middle .container p {
+        width: 100%;
+    }
+
+    #home .bottom .container .gallery .card {
+        width: 100%;
+    }
+
+    /*======================================CURSOS============================================== */
+    #cursos .top {
+        height: 100%;
+    }
+
+    #cursos .top .container {
+        padding: 0;
+    }
+
+    #cursos .bottom .container {
+        padding: 5rem 0;
+    }
+
+    #cursos .bottom .container .gallery .card {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    /*======================================CONTATO============================================== */
+    #contato .container {
+        padding-top: 6rem;
+    }
+
+    #contato .container form {
+        width: 90%;
+    }
+
+    /*======================================ADM============================================== */
+    #adm nav {
+        width: 40vw;
+    }
+
+    #adm nav .container {
+        width: 60vw;
+    }
+
+    #adm nav .container li button {
+        word-wrap: break-word;
+        width: 60%;
+    }
+
+    /* TURMAS */
+    #adm section #turmas .container {
+        padding: 2rem 1rem;
+    }
+
+    #adm section #turmas .container .top {
+        width: 100%;
+    }
+
+    #adm section #turmas .container .top input {
+        width: 40%;
+    }
+
+    #adm section #turmas .container .top input:focus {
+        width: 80%;
+    }
+
+    #adm section #turmas .container .gallery {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+    }
+
+    #adm section #turmas .container .gallery .card {
+        padding: 1rem;
+    }
+
+    /* MATRICULA */
+    #adm section #matricula .container {
+        flex-wrap: wrap;
+    }
+
+    #adm section #matricula .container .left,
+    #adm section #matricula .container .right {
+        width: 100%;
+    }
+
+    #adm section #matricula .container .left .title {
+        text-align: center;
+    }
+
+    #adm section #matricula .container .left form input,
+    #adm section #matricula .container .left form #btn {
+        width: 100%;
+    }
+
+    #adm section #matricula .container .right {
+        gap: 1rem;
+    }
+
+    /* FINANCEIRO ALUNO */
+    #adm section #financeiroalunos .container {
+        flex-wrap: wrap;
+    }
+
+    #adm section #financeiroalunos #lista_cursos {
+        width: 98vw;
+        left: 1%;
+    }
+
+    #adm section #financeiroalunos #lista_cursos #lista_cursos_body .body p,
+    #adm section #financeiroalunos #lista_cursos #lista_cursos_body .top p {
+        text-align: center;
+    }
+
+    #adm section #financeiroalunos .container .left,
+    #adm section #financeiroalunos .container .right {
+        width: 100%;
+    }
+
+    #adm section #financeiroalunos .container .left input,
+    #adm section #financeiroalunos .container .right input {
+        width: 100%;
+    }
+
+    #adm section #financeiroalunos .container .left #btn,
+    #adm section #financeiroalunos .container .right #btn {
+        width: 100%;
+    }
+
+    #adm section #financeiroalunos .container .left #buscaCurso {
+        width: 100%;
+        height: 3vh;
+    }
+
+    #adm section #financeiroalunos .container .right #relatorio-msg {
+        margin: 2rem auto 0;
     }
 }

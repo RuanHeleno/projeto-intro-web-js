@@ -129,14 +129,16 @@ const carrinhoCursos = [];
 let htmlCode = ``;
 
 //Verifica se já está salvo no localStora, caso não esteja, salva
-if(localStorage.getItem('cursos') === null) localStorage.setItem('cursos', JSON.stringify(cursos));
-if(localStorage.getItem('turmas') === null) localStorage.setItem('turmas', JSON.stringify(turmas));
+if (localStorage.getItem("cursos") === null)
+  localStorage.setItem("cursos", JSON.stringify(cursos));
+if (localStorage.getItem("turmas") === null)
+  localStorage.setItem("turmas", JSON.stringify(turmas));
 
 //Caso já tenha salvo, joga o valor salvo no array de Estudantes
-if(localStorage.getItem('estudantes') === null) { 
-  localStorage.setItem('estudantes', JSON.stringify(estudantes));
-} else { 
-  estudantes = JSON.parse(localStorage.getItem('estudantes'));
+if (localStorage.getItem("estudantes") === null) {
+  localStorage.setItem("estudantes", JSON.stringify(estudantes));
+} else {
+  estudantes = JSON.parse(localStorage.getItem("estudantes"));
 }
 
 //Constantes dos elementos HTML
@@ -243,7 +245,7 @@ const matricular = (nome, curso, turma, nParcelas) => {
     return;
   }
 
-  if(estudanteBuscado.length > 0) {
+  if (estudanteBuscado.length > 0) {
     sweetAlert("Aluno já cadastrado!", "warning");
     return;
   }
@@ -267,7 +269,7 @@ const matricular = (nome, curso, turma, nParcelas) => {
   };
 
   estudantes.push(novoAluno);
-  localStorage.setItem('estudantes', JSON.stringify(estudantes));
+  localStorage.setItem("estudantes", JSON.stringify(estudantes));
 
   matriculaMsgText.innerHTML = `
     <p><span>Nome:</span> ${nome}</p>
@@ -349,6 +351,19 @@ const removeCarrinhoCurso = (element, curso) => {
 
 //Parcela o valor total checando o(s) curso(s) escolhido(s) e o número de parcela(s) para aplicar ou não um desconto
 const parcelarCurso = (arr, nParcelas) => {
+  nParcelas = parseInt(nParcelas);
+
+  if (arr.length === 0) {
+    sweetAlert("Adicione um curso para prosseguir!", "error");
+    return;
+  } else if (isNaN(nParcelas)) {
+    sweetAlert("Adicione um valor válido!", "error");
+    return;
+  } else if (nParcelas === 0) {
+    sweetAlert("Adicione um valor acima de 0!", "error");
+    return;
+  }
+
   let descontoCursos = 0;
   const descontoAVista = 0.2;
 
@@ -373,11 +388,16 @@ const parcelarCurso = (arr, nParcelas) => {
 
     cursoValor.innerHTML = `
       <p><b>Valor</b></p>
-      <p class="text">O valor do pagamento é de <b>R$ ${total.toFixed(
-        2
-      )}</b> com 20% desconto, parcelado em ${nParcelas}x de <b>R$ ${(
+      <p class="text">O valor do pagamento é de <b>R$ ${total
+        .toFixed(2)
+        .replace(
+          ".",
+          ","
+        )}</b> com 20% desconto, parcelado em ${nParcelas}x de <b>R$ ${(
       total / nParcelas
-    ).toFixed(2)}</b></p>
+    )
+      .toFixed(2)
+      .replace(".", ",")}</b></p>
       `;
   } else {
     cursoValor.innerHTML = `
