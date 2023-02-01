@@ -129,10 +129,8 @@ const carrinhoCursos = [];
 let htmlCode = ``;
 
 //Verifica se já está salvo no localStora, caso não esteja, salva
-if (localStorage.getItem("cursos") === null)
-  localStorage.setItem("cursos", JSON.stringify(cursos));
-if (localStorage.getItem("turmas") === null)
-  localStorage.setItem("turmas", JSON.stringify(turmas));
+if (localStorage.getItem("cursos") === null) localStorage.setItem("cursos", JSON.stringify(cursos));
+if (localStorage.getItem("turmas") === null) localStorage.setItem("turmas", JSON.stringify(turmas));
 
 //Caso já tenha salvo, joga o valor salvo no array de Estudantes
 if (localStorage.getItem("estudantes") === null) {

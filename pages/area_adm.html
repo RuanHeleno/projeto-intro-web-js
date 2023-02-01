@@ -155,7 +155,11 @@
             <div class="right">
               <h2 class="title">Relatório Aluno</h2>
               <label for="buscaAluno">Nome</label>
-              <input type="text" id="buscaAluno" onkeypress="checkKeyPressed(event, this)" />
+              <input
+                type="text"
+                id="buscaAluno"
+                onkeypress="checkKeyPressed(event, this)"
+              />
               <button
                 id="btn"
                 onclick="relatorioEstudante(this.previousElementSibling.value)"
