@@ -1,5 +1,7 @@
 # Projeto de Introdução Web - JavaScript
 
+## Deploy: <a href="https://intro-web-ozemela-ruan-rocha.netlify.app"> Clique aqui </a>
+
 ## Enunciado
 
 Vamos começar nossa jornada no desenvolvimento web criando um sistema de escola de programação, porque aqui gostamos de metalinguagem!
